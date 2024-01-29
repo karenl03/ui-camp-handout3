@@ -29,14 +29,36 @@ const updatePage = async () => {
 
   // Make API request and get an array of fruit objects
   const fruitsArray = await apiRequest();
-  // console.log(fruitsArray);
+  console.log(fruitsArray);
 
   // TODO: Use either `map` and/or `filter` to extract some data from the array of fruit objects
   // For example, find "name of all fruits whose sugar > 15",
+  const proteinFruit = fruitsArray.filter(fruit => fruit.nutritions.protein > 1);
+  proteinFruit.sort((a, b) => b.nutritions.protein - a.nutritions.protein);
+
 
   // TODO: Create a new HTML element to display your data
+  const text = document.createTextNode('Fruits with high protein content:');
+  const fruitTable = document.createElement('table');
+  const tbody = document.createElement('tbody');
+
+  proteinFruit.forEach(f => {
+    const fruit = document.createElement('tr');
+
+    const name = document.createElement('td');
+    name.textContent = f.name; 
+    const protein = document.createElement('td');
+    protein.textContent = f.nutritions.protein; 
+    
+    fruit.appendChild(name);
+    fruit.appendChild(protein);
+    tbody.appendChild(fruit);
+  });
 
   // TODO: Append your new element to the page
+  fruitTable.appendChild(tbody);
+  gallery.append(text);
+  gallery.append(fruitTable);
 };
 
 // SAMPLE CODE of how to create and append a new HTML element to the page
